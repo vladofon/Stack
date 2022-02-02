@@ -1,6 +1,17 @@
 ﻿#include <iostream>
+#include"Stack.h"
+
+using namespace std;
 
 int main()
 {
-   std::cout << "Hello World!\n";
+   Stack<long> numbers = Stack<long>();
+   numbers.add(10);
+   numbers.add(100);
+
+   numbers.remove();
+
+   cout << numbers.get() << endl;
+
+   return 0;
 }
