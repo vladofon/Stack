@@ -142,6 +142,7 @@
     <ClCompile Include="Task-2_StackApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EvenNumbersFilter.h" />
     <ClInclude Include="Stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

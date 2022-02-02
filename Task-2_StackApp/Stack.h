@@ -44,6 +44,19 @@ public:
       size--;
    }
 
+   void clear()
+   {
+      while (size != 0)
+      {
+         remove();
+      }
+   }
+
+   long getSize()
+   {
+      return size;
+   }
+
 private:
 
    class Node
