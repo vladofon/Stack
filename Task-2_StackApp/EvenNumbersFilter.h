@@ -9,32 +9,47 @@ class TaskProcessor
 {
 public:
 
-   Stack<T> evenNumbers(Stack<T> numbers)
+   Stack<T>* evenNumbers(Stack<T>* numbers)
    {
-      Stack<T> result = Stack<T>();
+      Stack<T>* result = new Stack<T>();
 
-      long size = numbers.getSize();
+      long size = numbers->getSize();
       for (long i = 0; i < size; i++)
       {
-         T item = numbers.get();
+         T item = numbers->get();
 
          if (item % 2 == 0)
          {
-            result.add(item);
+            result->add(item);
          }
       }
 
       return result;
    }
 
-   string toString(Stack<T> stack)
+   string toString(Stack<T>* stack)
    {
       string result = "";
 
-      long size = stack.getSize();
+      long size = stack->getSize();
       for (long i = 0; i < size; i++)
       {
-         result += to_string(stack.get()) + "\r\n";
+         T item = stack->get();
+         result += to_string(item) + "\r\n";
+      }
+
+      return result;
+   }
+
+   string appendAll(Stack<string>* stack)
+   {
+      string result = "";
+
+      long size = stack->getSize();
+      for (long i = 0; i < size; i++)
+      {
+         string item = stack->get();
+         result += item + "\r\n";
       }
 
       return result;

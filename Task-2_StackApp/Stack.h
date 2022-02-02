@@ -39,7 +39,7 @@ public:
 
       head = head->pPrev;
 
-      delete[] toDelete;
+      delete toDelete;
 
       size--;
    }
@@ -50,6 +50,23 @@ public:
       {
          remove();
       }
+   }
+
+   void reverse()
+   {
+      long arraySize = size;
+
+      Node** arrayStack = new Node * [arraySize];
+
+      Node* current = head;
+
+      for (long i = 0; i < arraySize; i++)
+      {
+         arrayStack[i] = current;
+         current = current->pPrev;
+      }
+
+      head = arrayStack[0];
    }
 
    long getSize()
