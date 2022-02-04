@@ -142,8 +142,15 @@
     <ClCompile Include="Task-2_StackApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayList.h" />
     <ClInclude Include="EvenNumbersFilter.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="SchemaFormatter.h" />
+    <ClInclude Include="SchemaParser.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="StackFormatter.h" />
+    <ClInclude Include="TableRecord.h" />
+    <ClInclude Include="TableSchema.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
