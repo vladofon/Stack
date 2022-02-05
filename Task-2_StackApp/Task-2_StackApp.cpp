@@ -22,15 +22,13 @@ int main()
    names->add("Tiglath-Pileser");
    names->add("Nebuchadnezzar");
 
-   TaskProcessor<long> processor = TaskProcessor<long>();
-
-   Stack<long>* even = processor.evenNumbers(numbers);
+   numbers->filterRange(100, 10000);
 
    names->reverse();
 
    StackFormatter* formatter = new StackFormatter();
 
-   string result = formatter->format(even, names);
+   string result = formatter->format(numbers, names);
 
    cout << result << endl;
 

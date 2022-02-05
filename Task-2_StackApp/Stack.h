@@ -69,6 +69,75 @@ public:
       head = arrayStack[0];
    }
 
+   void filterRange(long from, long to)
+   {
+      Node* current = head;
+      Node* valid = nullptr;
+
+      if (current == nullptr)
+         return;
+
+      long counter = 0;
+      while (current->pPrev != nullptr)
+      {
+         T number = current->item;
+         if (number < from || number > to)
+         {
+            if (current == head)
+            {
+               Node* toDelete = current;
+
+               current = toDelete->pPrev;
+
+               head = current;
+
+               delete toDelete;
+
+               size--;
+            }
+            else
+            {
+
+               Node* toDelete = current;
+
+               current = toDelete->pPrev;
+
+               delete toDelete;
+
+               size--;
+            }
+         }
+         else
+         {
+            if (valid == nullptr)
+            {
+               valid = current;
+               current = current->pPrev;
+
+               counter++;
+            }
+            else
+            {
+               Node* last = valid;
+
+               long innerCounter = 0;
+               while (innerCounter != counter - 1)
+               {
+                  last = last->pPrev;
+                  innerCounter++;
+               }
+
+               last->pPrev = current;
+               current = current->pPrev;
+
+               counter++;
+            }
+         }
+      }
+
+      head = valid;
+   }
+
    long getSize()
    {
       return size;
