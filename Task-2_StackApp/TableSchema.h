@@ -110,6 +110,23 @@ private:
 
    List<Row>* rows = new ArrayList<Row>();
 
+   long maxColumnSizeByRow(long rowId)
+   {
+      long maxColumnSize = 0;
+
+      for (long i = 0; i < getRow(rowId).colsCount(); i++)
+      {
+         long currentColumnSize = getRow(rowId).getColumn(i).cellsCount();
+
+         if (maxColumnSize < currentColumnSize)
+         {
+            maxColumnSize = currentColumnSize;
+         }
+      }
+
+      return maxColumnSize;
+   }
+
 public:
 
    void fillColumn(long rowId, long columnId, List<string>* data)
@@ -119,6 +136,24 @@ public:
          getRow(rowId)
             .getColumn(columnId)
             .createCell(data->get(i));
+      }
+   }
+
+   void rebalanceColumns(long rowId)
+   {
+      long maxColumnSize = maxColumnSizeByRow(rowId);
+
+      for (long i = 0; i < getRow(rowId).colsCount(); i++)
+      {
+         long currentColumnSize = getRow(rowId).getColumn(i).cellsCount();
+
+         if (maxColumnSize > currentColumnSize)
+         {
+            for (long cell = currentColumnSize; cell < maxColumnSize; cell++)
+            {
+               getRow(rowId).getColumn(i).createCell("");
+            }
+         }
       }
    }
 

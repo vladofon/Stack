@@ -23,6 +23,9 @@ public:
 
       for (long row = 0; row < schema.rowsCount(); row++)
       {
+         /* add empty cells for balance(symmetry) */
+         schema.rebalanceColumns(row);
+
          /* only one item can be present in a rowHeader list */
          List<string>* rowHeader = new ArrayList<string>();
          List<string>* columnsHeaders = new ArrayList<string>();

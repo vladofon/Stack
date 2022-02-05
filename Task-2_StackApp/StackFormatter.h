@@ -8,15 +8,15 @@
 
 using namespace std;
 
-class FencersFormatter
+class StackFormatter
 {
 public:
-   FencersFormatter(TableSchema* schema)
+   StackFormatter(TableSchema* schema)
    {
       this->schema = schema;
    }
 
-   FencersFormatter()
+   StackFormatter()
    {
       // If constructor empty define default schema
       this->schema = new TableSchema();

@@ -1,7 +1,8 @@
 ﻿#include <iostream>
 #include <string>
-#include"Stack.h"
-#include"EvenNumbersFilter.h"
+#include "Stack.h"
+#include "StackFormatter.h"
+#include "EvenNumbersFilter.h"
 
 using namespace std;
 
@@ -25,17 +26,13 @@ int main()
 
    Stack<long>* even = processor.evenNumbers(numbers);
 
-   string evenNumbers = processor.toString(even);
-
-   cout << evenNumbers;
-   cout << "_____________" << endl;
-
    names->reverse();
 
-   TaskProcessor<string> stringProcessor = TaskProcessor<string>();
-   string reverseNames = stringProcessor.appendAll(names);
+   StackFormatter* formatter = new StackFormatter();
 
-   cout << reverseNames;
+   string result = formatter->format(even, names);
+
+   cout << result << endl;
 
    return 0;
 }
