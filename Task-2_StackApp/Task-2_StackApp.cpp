@@ -14,6 +14,8 @@ int main()
    numbers->add(1001);
    numbers->add(10000);
    numbers->add(100001);
+   numbers->add(1000000);
+   numbers->add(10000000);
 
    Stack<string>* names = new Stack<string>();
    names->add("Gilgamesh");

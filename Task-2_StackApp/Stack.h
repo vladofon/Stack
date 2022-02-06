@@ -73,15 +73,8 @@ public:
    {
       Node* current = head;
 
-      if (isRecursionDone)
-         return true;
-
       if (current == nullptr)
-      {
-         isRecursionDone = true;
-
-         return isRecursionDone;
-      }
+         return true;
 
       if (skipCount != 0)
          current = skipTo(skipCount);
@@ -91,9 +84,7 @@ public:
       if (condition)
       {
          Node* toDelete = current;
-
          current = current->pPrev;
-
          delete toDelete;
 
          size--;
@@ -111,37 +102,14 @@ public:
          filterRange(from, to);
       }
 
-      if (current == nullptr || current->pPrev == nullptr)
+      if (current == nullptr || current->pPrev == nullptr || isRecursionDone)
       {
          isRecursionDone = true;
-
-         return isRecursionDone;
+         return true;
       }
 
       skipCount++;
       filterRange(from, to, skipCount);
-
-
-      /*
-      while (current->pPrev != nullptr)
-      {
-         Node* previous = current->pPrev;
-         bool condition = previous->item < from || previous->item > to;
-
-         if (condition)
-         {
-            current->pPrev = previous->pPrev;
-
-            delete previous;
-
-            size--;
-         }
-         else
-         {
-            current = current->pPrev;
-         }
-      }
-      */
    }
 
    long getSize()
