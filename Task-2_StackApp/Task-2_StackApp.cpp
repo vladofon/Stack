@@ -22,7 +22,7 @@ int main()
    names->add("Tiglath-Pileser");
    names->add("Nebuchadnezzar");
 
-   numbers->filterRange(100, 10000);
+   numbers->filterRange(100, 1000);
 
    names->reverse();
 

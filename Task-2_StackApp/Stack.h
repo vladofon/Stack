@@ -69,73 +69,79 @@ public:
       head = arrayStack[0];
    }
 
-   void filterRange(long from, long to)
+   bool filterRange(long from, long to, long skipCount = 0)
    {
       Node* current = head;
-      Node* valid = nullptr;
+
+      if (isRecursionDone)
+         return true;
 
       if (current == nullptr)
-         return;
-
-      long counter = 0;
-      while (current->pPrev != nullptr)
       {
-         T number = current->item;
-         if (number < from || number > to)
+         isRecursionDone = true;
+
+         return isRecursionDone;
+      }
+
+      if (skipCount != 0)
+         current = skipTo(skipCount);
+
+      bool condition = current->item < from || current->item > to;
+
+      if (condition)
+      {
+         Node* toDelete = current;
+
+         current = current->pPrev;
+
+         delete toDelete;
+
+         size--;
+
+         if (skipCount == 0)
          {
-            if (current == head)
-            {
-               Node* toDelete = current;
-
-               current = toDelete->pPrev;
-
-               head = current;
-
-               delete toDelete;
-
-               size--;
-            }
-            else
-            {
-
-               Node* toDelete = current;
-
-               current = toDelete->pPrev;
-
-               delete toDelete;
-
-               size--;
-            }
+            head = current;
          }
          else
          {
-            if (valid == nullptr)
-            {
-               valid = current;
-               current = current->pPrev;
-
-               counter++;
-            }
-            else
-            {
-               Node* last = valid;
-
-               long innerCounter = 0;
-               while (innerCounter != counter - 1)
-               {
-                  last = last->pPrev;
-                  innerCounter++;
-               }
-
-               last->pPrev = current;
-               current = current->pPrev;
-
-               counter++;
-            }
+            Node* last = skipTo();
+            last->pPrev = current;
          }
+
+         filterRange(from, to);
       }
 
-      head = valid;
+      if (current == nullptr || current->pPrev == nullptr)
+      {
+         isRecursionDone = true;
+
+         return isRecursionDone;
+      }
+
+      skipCount++;
+      filterRange(from, to, skipCount);
+
+
+      /*
+      while (current->pPrev != nullptr)
+      {
+         Node* previous = current->pPrev;
+         bool condition = previous->item < from || previous->item > to;
+
+         if (condition)
+         {
+            current->pPrev = previous->pPrev;
+
+            delete previous;
+
+            size--;
+         }
+         else
+         {
+            current = current->pPrev;
+         }
+      }
+      */
    }
 
    long getSize()
@@ -160,4 +166,24 @@ private:
 
    Node* head;
    long size;
+
+   bool isRecursionDone = false;
+
+   Node* skipTo(long skip = 0)
+   {
+      Node* current = head;
+
+      if (skip == 0)
+         skip = size - 1;
+
+      long counter = 0;
+
+      while (counter != skip)
+      {
+         current = current->pPrev;
+         counter++;
+      }
+
+      return current;
+   }
 };
