@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="ArrayList.h" />
     <ClInclude Include="EvenNumbersFilter.h" />
+    <ClInclude Include="FilterExpression.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="SchemaFormatter.h" />
     <ClInclude Include="SchemaParser.h" />

@@ -1,4 +1,5 @@
 #pragma once
+#include"FilterExpression.h"
 
 template<class T>
 class Stack
@@ -69,6 +70,13 @@ public:
       head = arrayStack[0];
    }
 
+   void filter(FilterExpression<T>* expression, long skipCount = 0)
+   {
+      recursiveDeleting(expression);
+
+      isRecursionDone = false;
+   }
+
    bool filterRange(long from, long to, long skipCount = 0)
    {
       Node* current = head;
@@ -95,7 +103,7 @@ public:
          }
          else
          {
-            Node* last = skipTo();
+            Node* last = skipTo(skipCount - 1);
             last->pPrev = current;
          }
 
@@ -110,6 +118,49 @@ public:
 
       skipCount++;
       filterRange(from, to, skipCount);
+   }
+
+   bool filterEven(long skipCount = 0)
+   {
+      Node* current = head;
+
+      if (current == nullptr)
+         return true;
+
+      if (skipCount != 0)
+         current = skipTo(skipCount);
+
+      bool condition = !(current->item % 2 == 0);
+
+      if (condition)
+      {
+         Node* toDelete = current;
+         current = current->pPrev;
+         delete toDelete;
+
+         size--;
+
+         if (skipCount == 0)
+         {
+            head = current;
+         }
+         else
+         {
+            Node* last = skipTo(skipCount - 1);
+            last->pPrev = current;
+         }
+
+         filterEven();
+      }
+
+      if (current == nullptr || current->pPrev == nullptr || isEvenRecDone)
+      {
+         isEvenRecDone = true;
+         return true;
+      }
+
+      skipCount++;
+      filterEven(skipCount);
    }
 
    long getSize()
@@ -136,12 +187,64 @@ private:
    long size;
 
    bool isRecursionDone = false;
+   bool isEvenRecDone = false;
 
-   Node* skipTo(long skip = 0)
+   bool recursiveDeleting(FilterExpression<T>* expression, long skipCount = 0)
    {
       Node* current = head;
 
-      if (skip == 0)
+      if (skipCount != 0)
+         current = skipTo(skipCount);
+
+      if (current == nullptr || isRecursionDone)
+      {
+         isRecursionDone = true;
+         return true;
+      }
+
+      bool condition = expression->apply(current->item);
+
+      if (!condition)
+      {
+         deleteNode(current, skipCount);
+
+         recursiveDeleting(expression, skipCount);
+      }
+
+      if (current == nullptr || current->pPrev == nullptr || isRecursionDone)
+      {
+         isRecursionDone = true;
+         return true;
+      }
+
+      skipCount++;
+      recursiveDeleting(expression, skipCount);
+   }
+
+   void deleteNode(Node* current, long skipCount)
+   {
+      Node* toDelete = current;
+      current = current->pPrev;
+      delete toDelete;
+
+      size--;
+
+      if (skipCount == 0)
+      {
+         head = current;
+      }
+      else
+      {
+         Node* last = skipTo(skipCount - 1);
+         last->pPrev = current;
+      }
+   }
+
+   Node* skipTo(long skip = 0, bool end = false)
+   {
+      Node* current = head;
+
+      if (end == true)
          skip = size - 1;
 
       long counter = 0;

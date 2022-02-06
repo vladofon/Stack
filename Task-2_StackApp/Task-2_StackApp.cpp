@@ -2,20 +2,36 @@
 #include <string>
 #include "Stack.h"
 #include "StackFormatter.h"
+#include "FilterExpression.h"
 #include "EvenNumbersFilter.h"
 
 using namespace std;
 
 int main()
 {
+   class : public FilterExpression<long>
+   {
+      bool apply(long item) override
+      {
+         return item > -50 && item < 50;
+      }
+   } filterByRange;
+
+   class : public FilterExpression<long>
+   {
+      bool apply(long item) override
+      {
+         return item % 2 == 0;
+      }
+   } filterByEvenNumbers;
+
    Stack<long>* numbers = new Stack<long>();
    numbers->add(11);
    numbers->add(100);
    numbers->add(1001);
    numbers->add(10000);
    numbers->add(100001);
-   numbers->add(1000000);
-   numbers->add(10000000);
+   numbers->add(1000010);
 
    Stack<string>* names = new Stack<string>();
    names->add("Gilgamesh");
@@ -24,7 +40,7 @@ int main()
    names->add("Tiglath-Pileser");
    names->add("Nebuchadnezzar");
 
-   numbers->filterRange(100, 1000);
+   numbers->filter(&filterByEvenNumbers);
 
    names->reverse();
 
