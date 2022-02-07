@@ -15,6 +15,7 @@ int main()
       {
          return item > -50 && item < 50;
       }
+
    } filterByRange;
 
    class : public FilterExpression<long>
@@ -23,6 +24,7 @@ int main()
       {
          return item % 2 == 0;
       }
+
    } filterByEvenNumbers;
 
    Stack<long>* numbers = new Stack<long>();

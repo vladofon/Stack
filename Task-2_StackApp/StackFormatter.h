@@ -23,16 +23,31 @@ public:
       initDefaultSchema();
    }
 
-   string format(Stack<long>* numbers, Stack<string>* names)
+   string format(Stack<long>* rangeBasic, Stack<long>* rangeFiltered,
+      Stack<long>* evenNumbersBasic, Stack<long>* evenNumbersFiltered,
+      Stack<string>* reverseBasic, Stack<string>* reverseFiltered)
    {
       List<string>* firstColumn = new ArrayList<string>();
       List<string>* secondColumn = new ArrayList<string>();
+      List<string>* thirdColumn = new ArrayList<string>();
+      List<string>* fourthColumn = new ArrayList<string>();
+      List<string>* fifthColumn = new ArrayList<string>();
+      List<string>* sixthColumn = new ArrayList<string>();
 
-      firstColumn = parseNumbers(numbers);
-      secondColumn->merge(names);
+      firstColumn = parseNumbers(rangeBasic);
+      secondColumn = parseNumbers(rangeFiltered);
+      thirdColumn = parseNumbers(evenNumbersBasic);
+      fourthColumn = parseNumbers(evenNumbersFiltered);
+
+      fifthColumn->merge(reverseBasic);
+      sixthColumn->merge(reverseFiltered);
 
       schema->fillColumn(0, 0, firstColumn);
       schema->fillColumn(0, 1, secondColumn);
+      schema->fillColumn(1, 0, thirdColumn);
+      schema->fillColumn(1, 1, fourthColumn);
+      schema->fillColumn(2, 0, fifthColumn);
+      schema->fillColumn(2, 1, sixthColumn);
 
       SchemaParser* parser = new SchemaParser(*schema);
       return parser->parseSchema();
@@ -43,9 +58,15 @@ private:
 
    void initDefaultSchema()
    {
-      schema->createRow("=======+ Stack operations +=======");
-      schema->getRow(0).createColumn("Stack of even numbers");
-      schema->getRow(0).createColumn("Reversed stack of names");
+      schema->createRow("=======+ Filter by range (+-50) +=======");
+      schema->getRow(0).createColumn("Basic stack");
+      schema->getRow(0).createColumn("Filtered stack");
+      schema->createRow("=======+ Filter by even numbers +=======");
+      schema->getRow(1).createColumn("Basic stack");
+      schema->getRow(1).createColumn("Filtered stack");
+      schema->createRow("=======+ Reverse stack operation +=======");
+      schema->getRow(2).createColumn("Basic stack");
+      schema->getRow(2).createColumn("Reversed stack");
    }
 
    List<string>* parseNumbers(Stack<long>* numbers)
