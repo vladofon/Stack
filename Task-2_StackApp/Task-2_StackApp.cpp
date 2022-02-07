@@ -35,6 +35,18 @@ int main()
    numbers->add(100001);
    numbers->add(1000010);
 
+   Stack<long>* filteredByRange = new Stack<long>();
+   numbers->copy(*filteredByRange);
+
+   Stack<long>* filteredByEvenNumbers = new Stack<long>();
+   numbers->copy(*filteredByEvenNumbers);
+
+   Stack<long>* basicByRange = new Stack<long>();
+   numbers->copy(*basicByRange);
+
+   Stack<long>* basicByEvenNumbers = new Stack<long>();
+   numbers->copy(*basicByEvenNumbers);
+
    Stack<string>* names = new Stack<string>();
    names->add("Gilgamesh");
    names->add("Sargon");
@@ -42,13 +54,21 @@ int main()
    names->add("Tiglath-Pileser");
    names->add("Nebuchadnezzar");
 
-   numbers->filter(&filterByEvenNumbers);
+   Stack<string>* reversedStack = new Stack<string>();
+   names->copy(*reversedStack);
 
-   names->reverse();
+   Stack<string>* basicReversedStack = new Stack<string>();
+   names->copy(*basicReversedStack);
+
+   filteredByEvenNumbers->filter(&filterByEvenNumbers);
+
+   filteredByRange->filter(&filterByRange);
+
+   reversedStack->reverse();
 
    StackFormatter* formatter = new StackFormatter();
 
-   string result = formatter->format(numbers, names);
+   string result = formatter->format(basicByRange, filteredByRange, basicByEvenNumbers, filteredByEvenNumbers, basicReversedStack, reversedStack);
 
    cout << result << endl;
 

@@ -66,8 +66,23 @@ public:
          arrayStack[i] = current;
          current = current->pPrev;
       }
+      for (long i = 0; i < arraySize; i++)
+      {
+         if (i != arraySize - 1)
+            arrayStack[arraySize - 1 - i]->pPrev = arrayStack[arraySize - 2 - i];
+         else
+            arrayStack[arraySize - 1 - i]->pPrev = nullptr;
+      }
 
-      head = arrayStack[0];
+      head = arrayStack[arraySize - 1];
+   }
+
+   void copy(Stack<T>& stk)
+   {
+      for (long i = 0; i < size; i++)
+      {
+         stk.add(skipTo(size - 1 - i)->item);
+      }
    }
 
    void filter(FilterExpression<T>* expression, long skipCount = 0)
