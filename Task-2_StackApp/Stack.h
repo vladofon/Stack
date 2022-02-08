@@ -87,95 +87,9 @@ public:
 
    void filter(FilterExpression<T>* expression, long skipCount = 0)
    {
-      recursiveDeleting(expression);
+      recursiveDeleting(expression, skipCount);
 
       isRecursionDone = false;
-   }
-
-   bool filterRange(long from, long to, long skipCount = 0)
-   {
-      Node* current = head;
-
-      if (current == nullptr)
-         return true;
-
-      if (skipCount != 0)
-         current = skipTo(skipCount);
-
-      bool condition = current->item < from || current->item > to;
-
-      if (condition)
-      {
-         Node* toDelete = current;
-         current = current->pPrev;
-         delete toDelete;
-
-         size--;
-
-         if (skipCount == 0)
-         {
-            head = current;
-         }
-         else
-         {
-            Node* last = skipTo(skipCount - 1);
-            last->pPrev = current;
-         }
-
-         filterRange(from, to);
-      }
-
-      if (current == nullptr || current->pPrev == nullptr || isRecursionDone)
-      {
-         isRecursionDone = true;
-         return true;
-      }
-
-      skipCount++;
-      filterRange(from, to, skipCount);
-   }
-
-   bool filterEven(long skipCount = 0)
-   {
-      Node* current = head;
-
-      if (current == nullptr)
-         return true;
-
-      if (skipCount != 0)
-         current = skipTo(skipCount);
-
-      bool condition = !(current->item % 2 == 0);
-
-      if (condition)
-      {
-         Node* toDelete = current;
-         current = current->pPrev;
-         delete toDelete;
-
-         size--;
-
-         if (skipCount == 0)
-         {
-            head = current;
-         }
-         else
-         {
-            Node* last = skipTo(skipCount - 1);
-            last->pPrev = current;
-         }
-
-         filterEven();
-      }
-
-      if (current == nullptr || current->pPrev == nullptr || isEvenRecDone)
-      {
-         isEvenRecDone = true;
-         return true;
-      }
-
-      skipCount++;
-      filterEven(skipCount);
    }
 
    long getSize()
@@ -202,7 +116,6 @@ private:
    long size;
 
    bool isRecursionDone = false;
-   bool isEvenRecDone = false;
 
    bool recursiveDeleting(FilterExpression<T>* expression, long skipCount = 0)
    {

@@ -28,12 +28,12 @@ int main()
    } filterByEvenNumbers;
 
    Stack<long>* numbers = new Stack<long>();
+   numbers->add(-10);
+   numbers->add(10);
    numbers->add(11);
    numbers->add(100);
    numbers->add(1001);
    numbers->add(10000);
-   numbers->add(100001);
-   numbers->add(1000010);
 
    Stack<long>* filteredByRange = new Stack<long>();
    numbers->copy(*filteredByRange);
@@ -67,9 +67,9 @@ int main()
    reversedStack->reverse();
 
    StackFormatter* formatter = new StackFormatter();
-
-   string result = formatter->format(basicByRange, filteredByRange, basicByEvenNumbers, filteredByEvenNumbers, basicReversedStack, reversedStack);
-
+   string result =
+      formatter
+      ->format(basicByRange, filteredByRange, basicByEvenNumbers, filteredByEvenNumbers, basicReversedStack, reversedStack);
    cout << result << endl;
 
    return 0;
